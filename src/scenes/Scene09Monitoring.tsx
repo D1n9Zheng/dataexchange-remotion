@@ -22,7 +22,7 @@ export const Scene09Monitoring: React.FC = () => {
       <LightBackground glowIntensity={1.08} />
       <ProductWindow
         title="任务运行与统一监控"
-        subtitle="全网交换拓扑实时感知，多租户隔离与全链路审计追踪，运维排障精准到秒"
+        subtitle="全网交换拓扑实时感知，数据访问受控与全链路审计追踪，运行异常清晰可定位"
         activeNav="运行监控"
         route="/dashboard"
         actionLabel="导出运维报告"
@@ -79,4 +79,3 @@ const Metric: React.FC<{label: string; value: string; sub: string; color: string
     <div className="mt-1 text-[9px] text-slate-400">{sub}</div>
   </div>
 );
-

@@ -116,7 +116,7 @@ export const Scene11EndingPlate: React.FC = () => {
 
         {/* 3. 放大后的 4 大核心优势标签 */}
         <div className="mt-8 flex items-center gap-3.5">
-          {['全主流协议覆盖', 'AI 辅助语义映射', '毫秒级流式吞吐', '多租户安全治理'].map((tag) => (
+          {['全主流协议覆盖', 'AI 辅助语义映射', '毫秒级流式吞吐', '数据安全与审计'].map((tag) => (
             <span
               key={tag}
               className="rounded-full bg-white px-5 py-2.5 text-[14px] font-bold text-[#1d1d1f] border border-black/[0.08] shadow-sm"

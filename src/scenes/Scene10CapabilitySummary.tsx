@@ -234,7 +234,7 @@ export const Scene10CapabilitySummary: React.FC = () => {
               </div>
             </div>
 
-            {/* 4. 多租户安全隔离与治理 (温暖琥珀色块 · 参考 10 hours / Security 标识) */}
+            {/* 4. 数据安全与审计 */}
             <div
               className="rounded-[36px] p-8 flex flex-col justify-between"
               style={{
@@ -249,25 +249,25 @@ export const Scene10CapabilitySummary: React.FC = () => {
               <div className="flex items-center justify-between">
                 <CapabilityIcon name="security" accent="#d97706" />
                 <span className="rounded-full bg-amber-50 px-4 py-1.5 text-[15px] font-semibold text-amber-700 border border-amber-200">
-                  安全治理
+                  安全审计
                 </span>
               </div>
 
               <div className="my-auto">
                 <div className="text-[44px] font-bold tracking-[-0.03em] leading-none text-amber-600">
-                  租户隔离
+                  数据安全
                 </div>
                 <div className="mt-4 text-[26px] font-bold text-[#1d1d1f] tracking-tight">
-                  多租户权限与审计
+                  权限控制与审计追踪
                 </div>
                 <div className="mt-2 text-[18px] text-[#6e6e73] font-medium">
-                  权限控制 · 操作留痕
+                  访问受控 · 操作留痕
                 </div>
               </div>
 
               <div className="flex items-center gap-2 text-[16px] font-medium text-amber-700">
                 <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
-                <span>治理过程可审计</span>
+                <span>审计记录可追踪</span>
               </div>
             </div>
 
