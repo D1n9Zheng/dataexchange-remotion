@@ -1,0 +1,33 @@
+{
+  "name": "b2b-exchange-promo-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "B2B Data Exchange Platform promotional 60FPS video made with Remotion",
+  "scripts": {
+    "dev": "remotion studio",
+    "studio": "remotion studio",
+    "typecheck": "tsc --noEmit",
+    "build": "remotion bundle",
+    "render:all": "remotion render FullPromoVideo out/FullPromoVideo_V1_Structure.mp4 --codec=h264 --muted",
+    "render:first-act": "remotion render FirstActPreview out/FirstActPreview.mp4 --codec=h264 --muted",
+    "render:s1": "remotion render Scene01-PainPoints out/Scene01_PainPoints.mp4 --codec=h264",
+    "render:s2": "remotion render Scene02-Breakthrough out/Scene02_Breakthrough.mp4 --codec=h264",
+    "render:s3": "remotion render Scene03-ConnectorUpload out/Scene03_ConnectorUpload.mp4 --codec=h264",
+    "render:legacy-protocols": "remotion render Legacy-StandardProtocols out/Legacy_Protocols.mp4 --codec=h264"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.260",
+    "@remotion/tailwind": "^4.0.260",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.260"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  }
+}
