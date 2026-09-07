@@ -11,7 +11,7 @@ export const FIRST_ACT_TIMING = {
 export const FULL_TIMING = {
   ...FIRST_ACT_TIMING,
   connectorAndUpload: secondsToFrames(15),
-  protocolParse: secondsToFrames(11),
+  protocolParse: secondsToFrames(13),
   aiMapping: secondsToFrames(12),
   resultPreview: secondsToFrames(10),
   exchangeFlow: secondsToFrames(9),

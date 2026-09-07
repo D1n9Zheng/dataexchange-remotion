@@ -60,7 +60,7 @@ const FullPromoVideo: React.FC = () => {
 export const Root: React.FC = () => {
   return (
     <>
-      {/* S03–S07 已接入真实录屏；S08 等待补录。全片 92 秒。 */}
+      {/* S03–S07 已接入真实录屏；S08 等待补录。全片 94 秒。 */}
       <Composition id="RecordingActPreview" component={RecordingActPreview} durationInFrames={RECORDING_ACT_DURATION} fps={VIDEO_FPS} width={1920} height={1080} />
       <Composition
         id="FullPromoVideo"

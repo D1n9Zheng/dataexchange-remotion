@@ -50,8 +50,8 @@ export const RecordingShotLayer: React.FC<{shot: RecordingShot; first: boolean}>
 };
 
 export const RecordingStage: React.FC<{
-  title: string; subtitle: string; step: number; shots?: RecordingShot[]; transitionFrom?: RecordingShot; children?: React.ReactNode;
-}> = ({title, subtitle, step, shots = [], transitionFrom, children}) => {
+  title: string; subtitle?: string; minimal?: boolean; step: number; shots?: RecordingShot[]; transitionFrom?: RecordingShot; children?: React.ReactNode;
+}> = ({title, subtitle, minimal = false, step, shots = [], transitionFrom, children}) => {
   const frame = useCurrentFrame();
   let offset = 0;
   return <AbsoluteFill style={{background: '#FBFBFD', color: recordingStyle.ink, fontFamily: recordingStyle.font, overflow: 'hidden'}}>
@@ -70,17 +70,17 @@ export const RecordingStage: React.FC<{
     {children}
     <div style={{position: 'absolute', left: 120, top: 88, opacity: ramp(frame, 0, 24), transform: `translateY(${(1 - ramp(frame, 0, 30)) * 12}px)`}}>
       <div style={{fontSize: 56, fontWeight: 650, letterSpacing: '-0.035em', lineHeight: 1.15}}>{title}</div>
-      <div style={{marginTop: 20, fontSize: 25, color: recordingStyle.muted}}>{subtitle}</div>
+      {!minimal && subtitle && <div style={{marginTop: 20, fontSize: 25, color: recordingStyle.muted}}>{subtitle}</div>}
     </div>
-    <div style={{position: 'absolute', right: 124, top: 111, display: 'flex', alignItems: 'center', gap: 10, color: recordingStyle.muted, fontSize: 18}}>
+    {!minimal && <div style={{position: 'absolute', right: 124, top: 111, display: 'flex', alignItems: 'center', gap: 10, color: recordingStyle.muted, fontSize: 18}}>
       <span style={{width: 7, height: 7, borderRadius: '50%', background: recordingStyle.blue}} />数据交换工具
-    </div>
-    <div style={{position: 'absolute', left: 124, right: 124, bottom: 96, display: 'flex', alignItems: 'center', gap: 24}}>
+    </div>}
+    {!minimal && <div style={{position: 'absolute', left: 124, right: 124, bottom: 96, display: 'flex', alignItems: 'center', gap: 24}}>
       {['接入', '解析', '映射', '预览', '运行'].map((label, index) => <React.Fragment key={label}>
         {index > 0 && <span style={{height: 1, width: 62, background: '#D2D2D7'}} />}
         <span style={{fontSize: 21, fontWeight: step === index ? 650 : 450, color: step === index ? recordingStyle.blue : '#8B929A'}}>{label}</span>
       </React.Fragment>)}
       <span style={{marginLeft: 'auto', fontSize: 18, color: '#8B929A'}}>EDIFACT ORDERS → JSON</span>
-    </div>
+    </div>}
   </AbsoluteFill>;
 };
