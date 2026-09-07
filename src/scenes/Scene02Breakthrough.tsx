@@ -1,6 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
-import {BrowserFrame} from '../components/BrowserFrame';
+import {ConnectionHub} from '../components/ConnectionHub';
 import {LightBackground} from '../components/LightBackground';
 
 interface CarryoverNode {
@@ -105,12 +105,12 @@ export const Scene02Breakthrough: React.FC = () => {
 
   return (
     <AbsoluteFill className="overflow-hidden bg-[#fbfbfd] font-sans text-[#1d1d1f] select-none">
-      <LightBackground glowIntensity={1.08 + collapse * 0.2} />
+      <div style={{opacity: 1 - morph}}><LightBackground glowIntensity={1.08 + collapse * 0.2} /></div>
 
       <div
         className="absolute left-1/2 top-1/2 h-[620px] w-[940px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[135px]"
         style={{
-          opacity: interpolate(frame, [0, 190, 330], [0.28, 0.34, 0.12], clamp),
+          opacity: interpolate(frame, [0, 190, 350], [0.28, 0.34, 0], clamp),
           background: 'radial-gradient(circle, rgba(0,113,227,0.2), rgba(41,151,255,0.08) 48%, transparent 76%)',
         }}
       />
@@ -178,9 +178,9 @@ export const Scene02Breakthrough: React.FC = () => {
       <DataChip label="EDIFACT ORDERS" x={inputX} opacity={inputOpacity} />
       <DataChip label="JSON" x={outputX} opacity={outputOpacity} />
 
-      {/* 产品节点与 BrowserFrame 共用同一几何体，直接 Morph 进入第三幕。 */}
+      {/* 产品节点收束到 S03 的位置与材质，跨镜头保持同一对象。 */}
       <div className="absolute inset-0 z-20" style={{opacity: hubOpacity}}>
-        <BrowserFrame progress={morph} activeStep={0} />
+        <ConnectionHub progress={morph} />
       </div>
     </AbsoluteFill>
   );

@@ -13,7 +13,9 @@
     "render:s1": "remotion render Scene01-PainPoints out/Scene01_PainPoints.mp4 --codec=h264",
     "render:s2": "remotion render Scene02-Breakthrough out/Scene02_Breakthrough.mp4 --codec=h264",
     "render:s3": "remotion render Scene03-ConnectorUpload out/Scene03_ConnectorUpload.mp4 --codec=h264",
-    "render:legacy-protocols": "remotion render Legacy-StandardProtocols out/Legacy_Protocols.mp4 --codec=h264"
+    "render:legacy-protocols": "remotion render Legacy-StandardProtocols out/Legacy_Protocols.mp4 --codec=h264",
+    "prepare:recordings": "python3 scripts/prepare-recordings.py",
+    "render:recordings": "remotion render RecordingActPreview out/RecordingActPreview.mp4 --codec=h264 --muted"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.260",

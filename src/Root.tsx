@@ -11,7 +11,7 @@ import {Scene08ExchangeFlow} from './scenes/Scene08ExchangeFlow';
 import {Scene09Monitoring} from './scenes/Scene09Monitoring';
 import {Scene10CapabilitySummary} from './scenes/Scene10CapabilitySummary';
 import {Scene11EndingPlate} from './scenes/Scene11EndingPlate';
-import {FIRST_ACT_DURATION, FIRST_ACT_TIMING, FULL_DURATION, FULL_TIMING, VIDEO_FPS} from './timeline/timing';
+import {FIRST_ACT_DURATION, FIRST_ACT_TIMING, FULL_DURATION, FULL_TIMING, VIDEO_FPS, RECORDING_ACT_DURATION} from './timeline/timing';
 import './styles/global.css';
 
 const FirstActPreview: React.FC = () => {
@@ -31,6 +31,14 @@ const FirstActPreview: React.FC = () => {
     </Series>
   );
 };
+
+const RecordingActPreview: React.FC = () => <Series>
+  <Series.Sequence durationInFrames={FULL_TIMING.connectorAndUpload}><Scene04ConnectorUpload /></Series.Sequence>
+  <Series.Sequence durationInFrames={FULL_TIMING.protocolParse}><Scene05ProtocolParse /></Series.Sequence>
+  <Series.Sequence durationInFrames={FULL_TIMING.aiMapping}><Scene06AiMapping /></Series.Sequence>
+  <Series.Sequence durationInFrames={FULL_TIMING.resultPreview}><Scene07ResultPreview /></Series.Sequence>
+  <Series.Sequence durationInFrames={FULL_TIMING.exchangeFlow}><Scene08ExchangeFlow /></Series.Sequence>
+</Series>;
 
 const FullPromoVideo: React.FC = () => {
   return (
@@ -52,7 +60,8 @@ const FullPromoVideo: React.FC = () => {
 export const Root: React.FC = () => {
   return (
     <>
-      {/* V1 完整 88 秒结构版；S03/S04/S06/S08 后续可替换为真实录屏。 */}
+      {/* S03–S07 已接入真实录屏；S08 等待补录。全片 92 秒。 */}
+      <Composition id="RecordingActPreview" component={RecordingActPreview} durationInFrames={RECORDING_ACT_DURATION} fps={VIDEO_FPS} width={1920} height={1080} />
       <Composition
         id="FullPromoVideo"
         component={FullPromoVideo}
@@ -91,7 +100,7 @@ export const Root: React.FC = () => {
         height={1080}
       />
 
-      {/* 独立分镜 03：连接器配置与样例接入。 */}
+      {/* 独立分镜 03：多种接入方式，连接两端（15 秒）。 */}
       <Composition
         id="Scene03-ConnectorUpload"
         component={Scene04ConnectorUpload}

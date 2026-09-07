@@ -1,0 +1,164 @@
+{
+  "connect": {
+    "source": "R02样例解析-1.mov",
+    "start": 28.2,
+    "end": 28.4,
+    "duration": 3.5,
+    "crop": [
+      1330,
+      605,
+      690,
+      150
+    ]
+  },
+  "upload": {
+    "source": "R02样例解析-1.mov",
+    "start": 36,
+    "end": 37.8,
+    "duration": 2.5,
+    "crop": [
+      290,
+      365,
+      1740,
+      680
+    ]
+  },
+  "uploaded": {
+    "source": "R02样例解析-1.mov",
+    "start": 41.95,
+    "end": 43.6,
+    "duration": 5,
+    "crop": [
+      290,
+      365,
+      1740,
+      680
+    ]
+  },
+  "parse": {
+    "source": "R03协议解析-1.mov",
+    "start": 1.2,
+    "end": 4.6,
+    "duration": 5,
+    "crop": [
+      300,
+      345,
+      1740,
+      680
+    ]
+  },
+  "parse-detail": {
+    "source": "R03协议解析-1.mov",
+    "start": 2.7,
+    "end": 4.3,
+    "duration": 6,
+    "crop": [
+      1210,
+      510,
+      780,
+      510
+    ]
+  },
+  "suggestions": {
+    "source": "R04AI映射审核-1.mov",
+    "start": 43,
+    "end": 46,
+    "duration": 3,
+    "crop": [
+      1010,
+      185,
+      1020,
+      690
+    ]
+  },
+  "date-review": {
+    "source": "R04AI映射审核-1.mov",
+    "start": 122,
+    "end": 127.75,
+    "duration": 6,
+    "crop": [
+      1390,
+      0,
+      700,
+      610
+    ],
+    "bottomStrip": [
+      1390,
+      990,
+      700,
+      90
+    ]
+  },
+  "date-confirmed": {
+    "source": "R04AI映射审核-1.mov",
+    "start": 129,
+    "end": 132,
+    "duration": 3,
+    "crop": [
+      1010,
+      185,
+      1020,
+      690
+    ]
+  },
+  "preview": {
+    "source": "R04AI映射审核-1.mov",
+    "start": 220,
+    "end": 224,
+    "duration": 4,
+    "crop": [
+      300,
+      90,
+      700,
+      950
+    ]
+  },
+  "preview-detail": {
+    "source": "R04AI映射审核-1.mov",
+    "start": 225.2,
+    "end": 225.7,
+    "duration": 4,
+    "crop": [
+      345,
+      350,
+      610,
+      480
+    ]
+  },
+  "saved": {
+    "source": "R04AI映射审核-1.mov",
+    "start": 237.7,
+    "end": 239.5,
+    "duration": 2,
+    "crop": [
+      265,
+      100,
+      1780,
+      480
+    ]
+  },
+  "activate": {
+    "source": "R05传输任务-1.mov",
+    "start": 32,
+    "end": 34.5,
+    "duration": 2.5,
+    "crop": [
+      265,
+      105,
+      1780,
+      400
+    ]
+  },
+  "execution": {
+    "source": "R05传输任务-1.mov",
+    "start": 40.2,
+    "end": 43.8,
+    "duration": 4,
+    "crop": [
+      550,
+      130,
+      1010,
+      450
+    ]
+  }
+}
