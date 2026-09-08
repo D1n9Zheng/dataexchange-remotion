@@ -14,6 +14,7 @@ export const FULL_TIMING = {
   protocolParse: secondsToFrames(13),
   aiMapping: secondsToFrames(16),
   resultPreview: secondsToFrames(6),
+  exchangeFlow: secondsToFrames(9),
   capabilitySummary: secondsToFrames(7),
   ending: secondsToFrames(5),
 } as const;
@@ -30,4 +31,5 @@ export const FULL_DURATION = Object.values(FULL_TIMING).reduce(
 
 export const RECORDING_ACT_DURATION =
   FULL_TIMING.connectorAndUpload + FULL_TIMING.protocolParse +
-  FULL_TIMING.aiMapping + FULL_TIMING.resultPreview;
+  FULL_TIMING.aiMapping + FULL_TIMING.resultPreview + FULL_TIMING.exchangeFlow;
+

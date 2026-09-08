@@ -1,42 +1,226 @@
 import React from 'react';
-import {SCENE06_SHOTS} from './Scene07ResultPreview';
-import {AbsoluteFill, interpolate, Sequence, useCurrentFrame} from 'remotion';
-import {RecordingStage, RecordingShotLayer, ramp, recordingStyle} from '../components/RecordingStage';
+import {Freeze, OffthreadVideo, staticFile, useCurrentFrame} from 'remotion';
+import {ramp, recordingStyle, RecordingStage} from '../components/RecordingStage';
+import {FULL_TIMING} from '../timeline/timing';
+import {Scene07ResultPreview} from './Scene07ResultPreview';
 
-const Flow: React.FC = () => {
+export const Scene08ExchangeFlow: React.FC = () => {
   const frame = useCurrentFrame();
-  const progress = ramp(frame, 10, 118);
-  const stages = ['接收', '解析', '映射', '转换', '投递'];
-  return <AbsoluteFill style={{opacity: ramp(frame, 0, 15)}}>
-    <div style={{position: 'absolute', inset: '210px 0 128px', background: '#FBFBFD'}} />
-    <div style={{position: 'absolute', left: 120, top: 320, right: 120, textAlign: 'center', color: recordingStyle.muted, fontSize: 26}}>订单传输 · 按已配置规则运行</div>
-    <svg width="1920" height="1080" style={{position: 'absolute', inset: 0}}>
-      <path d="M 300 565 H 1620" stroke="#DCE6F1" strokeWidth="3" />
-      <path d="M 300 565 H 1620" stroke={recordingStyle.blue} strokeWidth="3" pathLength="1" strokeDasharray="1" strokeDashoffset={1 - progress} />
-    </svg>
-    {[{x: 145, title: '源端文件', format: 'SFTP · EDI'}, {x: 1485, title: '目标数据库', format: 'JDBC · JSON'}].map(node => <div key={node.title} style={{position: 'absolute', left: node.x, top: 495, width: 290, padding: '27px 0', textAlign: 'center', background: 'white', border: '1px solid #DCE6F1', borderRadius: 26}}>
-      <div style={{fontSize: 29, fontWeight: 600}}>{node.title}</div><div style={{fontSize: 20, color: recordingStyle.muted, marginTop: 10}}>{node.format}</div>
-    </div>)}
-    {stages.map((stage, index) => {
-      const active = progress >= (index + 1) / 6;
-      return <div key={stage} style={{position: 'absolute', left: 520 + index * 178, top: 510, width: 152, height: 112, borderRadius: 24, background: active ? '#EDF6FF' : '#FFFFFF', border: `1px solid ${active ? recordingStyle.blue : '#DCE6F1'}`, display: 'grid', placeItems: 'center', color: active ? recordingStyle.blue : recordingStyle.muted, fontSize: 26, fontWeight: 600}}>{stage}</div>;
-    })}
-    <div style={{position: 'absolute', left: interpolate(progress, [0, 1], [310, 1600]), top: 677, width: 14, height: 14, borderRadius: 7, background: recordingStyle.blue}} />
-    <div style={{position: 'absolute', top: 760, left: 0, right: 0, textAlign: 'center', fontSize: 23, color: recordingStyle.muted}}>接入与投递，由同一条任务串联</div>
-  </AbsoluteFill>;
-};
 
-export const Scene08ExchangeFlow: React.FC = () => <RecordingStage
-  title="规则进入任务，数据开始流转"
-  subtitle="启动订单传输，再查看实际执行结果"
-  step={4}
-  transitionFrom={SCENE06_SHOTS.at(-1)}
->
-  <Sequence durationInFrames={165}>
-    <RecordingShotLayer first={false} shot={{clip: 'activate', seconds: 2.5, sourceSize: [1780, 400]}} />
-  </Sequence>
-  <Sequence from={150} durationInFrames={165}><Flow /></Sequence>
-  <Sequence from={300} durationInFrames={240}>
-    <RecordingShotLayer first={false} shot={{clip: 'execution', seconds: 4, layout: 'detail', sourceSize: [1010, 450], heading: '这一次执行，已有记录', lines: ['成功 1 · 失败 0', '执行历史可查看'], footnote: '本次订单任务的执行结果，可在执行历史中查看。'}} />
-  </Sequence>
-</RecordingStage>;
+  // 阶段 1 (任务列表运行态 0~230) -> 阶段 2 (任务详情断点与历史 200~540)
+  const toDetail = ramp(frame, 200, 230);
+
+  return (
+    <>
+      <RecordingStage
+        title="统一传输中心，实时查看任务运行情况"
+        subtitle={frame < 220 ? '连接器按规则自动调度，业务数据毫秒级流转' : '支持断点续传、任务历史查看'}
+        minimal
+        step={4}
+      >
+        {/* 阶段 1：传输任务列表与实时运行态 (0 ~ 230 帧) */}
+        {frame < 240 && (
+          <div style={{position: 'absolute', inset: 0, opacity: 1 - toDetail}}>
+            {/* 实录卡片：任务列表 activate.mp4 */}
+            <div
+              style={{
+                position: 'absolute',
+                left: 200,
+                top: 240,
+                width: 1520,
+                height: 380,
+                borderRadius: 24,
+                overflow: 'hidden',
+                background: '#FFFFFF',
+                border: '1px solid #DCE6F1',
+                boxShadow: '0 24px 65px -32px rgba(0,63,130,0.24)',
+              }}
+            >
+              <OffthreadVideo
+                muted
+                src={staticFile('edited/activate.mp4')}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'left center',
+                }}
+              />
+            </div>
+
+            {/* 下方状态指示胶囊 */}
+            <div
+              style={{
+                position: 'absolute',
+                left: 200,
+                top: 650,
+                width: 1520,
+                display: 'flex',
+                gap: 20,
+                justifyContent: 'center',
+                opacity: ramp(frame, 20, 50),
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '12px 24px',
+                  borderRadius: 16,
+                  background: '#ECFDF5',
+                  border: '1px solid #A7F3D0',
+                  color: '#059669',
+                  fontSize: 18,
+                  fontWeight: 600,
+                }}
+              >
+                <span style={{width: 8, height: 8, borderRadius: '50%', background: '#059669'}} />
+                任务状态：运行中
+              </div>
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '12px 24px',
+                  borderRadius: 16,
+                  background: '#EFF6FF',
+                  border: '1px solid #BFDBFE',
+                  color: '#0071E3',
+                  fontSize: 18,
+                  fontWeight: 600,
+                }}
+              >
+                <span>🔄</span>
+                调度模式：定时自动拉取
+              </div>
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 10,
+                  padding: '12px 24px',
+                  borderRadius: 16,
+                  background: '#FFFFFF',
+                  border: '1px solid #DCE6F1',
+                  color: recordingStyle.ink,
+                  fontSize: 18,
+                  fontWeight: 600,
+                }}
+              >
+                <span>🔗</span>
+                接入流转：SFTP-TEST → JDBC-ORDERS
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 阶段 2：任务详情、断点续传与执行历史 (200 ~ 540 帧) */}
+        {frame >= 200 && (
+          <div style={{position: 'absolute', inset: 0, opacity: toDetail}}>
+            {/* 左侧说明面板 */}
+            <div style={{position: 'absolute', left: 160, top: 250, width: 590}}>
+              <div
+                style={{
+                  fontSize: 40,
+                  fontWeight: 700,
+                  color: recordingStyle.ink,
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.2,
+                }}
+              >
+                断点续传 · 任务历史
+              </div>
+
+              <div style={{marginTop: 32, display: 'flex', flexDirection: 'column', gap: 20}}>
+                <div
+                  style={{
+                    background: '#FFFFFF',
+                    padding: '24px 28px',
+                    borderRadius: 22,
+                    border: '1px solid #DCE6F1',
+                    boxShadow: '0 8px 24px -12px rgba(0,63,130,0.12)',
+                    opacity: ramp(frame, 220, 250),
+                    transform: `translateY(${(1 - ramp(frame, 220, 250)) * 14}px)`,
+                  }}
+                >
+                  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8}}>
+                    <div style={{fontSize: 22, fontWeight: 650, color: '#0071E3'}}>断点续传机制</div>
+                    <span style={{fontSize: 14, fontWeight: 700, color: '#0071E3', background: '#0071E315', padding: '4px 12px', borderRadius: 8}}>
+                      高可用保障
+                    </span>
+                  </div>
+                  <div style={{fontSize: 16, color: recordingStyle.muted, lineHeight: 1.5}}>
+                    传输节点精准记录断点游标，若遇网络抖动或服务重启，原地无缝续传，杜绝重复与遗漏。
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    background: '#FFFFFF',
+                    padding: '24px 28px',
+                    borderRadius: 22,
+                    border: '1px solid #DCE6F1',
+                    boxShadow: '0 8px 24px -12px rgba(0,63,130,0.12)',
+                    opacity: ramp(frame, 240, 270),
+                    transform: `translateY(${(1 - ramp(frame, 240, 270)) * 14}px)`,
+                  }}
+                >
+                  <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8}}>
+                    <div style={{fontSize: 22, fontWeight: 650, color: '#059669'}}>全量执行历史</div>
+                    <span style={{fontSize: 14, fontWeight: 700, color: '#059669', background: '#05966915', padding: '4px 12px', borderRadius: 8}}>
+                      100% 可回溯
+                    </span>
+                  </div>
+                  <div style={{fontSize: 16, color: recordingStyle.muted, lineHeight: 1.5}}>
+                    单笔任务流转记录全量存档，开始时间、成功与失败批次透明可查，异常一键定位分析。
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 右侧实录卡片：任务详情弹窗 execution.mp4 */}
+            <div
+              style={{
+                position: 'absolute',
+                left: 800,
+                top: 240,
+                width: 960,
+                height: 490,
+                borderRadius: 24,
+                overflow: 'hidden',
+                background: '#FFFFFF',
+                border: '1px solid #DCE6F1',
+                boxShadow: '0 24px 65px -32px rgba(0,63,130,0.24)',
+                opacity: ramp(frame, 210, 240),
+                transform: `scale(${0.96 + 0.04 * ramp(frame, 210, 240)})`,
+              }}
+            >
+              <OffthreadVideo
+                muted
+                src={staticFile('edited/execution.mp4')}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
+          </div>
+        )}
+      </RecordingStage>
+
+      {/* 场景入场平滑淡入 */}
+      {frame < 24 && (
+        <div style={{position: 'absolute', inset: 0, opacity: 1 - ramp(frame, 0, 24), pointerEvents: 'none'}}>
+          <Freeze frame={FULL_TIMING.resultPreview - 1}>
+            <Scene07ResultPreview />
+          </Freeze>
+        </div>
+      )}
+    </>
+  );
+};

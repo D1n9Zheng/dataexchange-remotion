@@ -7,6 +7,7 @@ import {Scene04ConnectorUpload} from './scenes/Scene04ConnectorUpload';
 import {Scene05ProtocolParse} from './scenes/Scene05ProtocolParse';
 import {Scene06AiMapping} from './scenes/Scene06AiMapping';
 import {Scene07ResultPreview} from './scenes/Scene07ResultPreview';
+import {Scene08ExchangeFlow} from './scenes/Scene08ExchangeFlow';
 import {Scene10CapabilitySummary} from './scenes/Scene10CapabilitySummary';
 import {Scene11EndingPlate} from './scenes/Scene11EndingPlate';
 import {FIRST_ACT_DURATION, FIRST_ACT_TIMING, FULL_DURATION, FULL_TIMING, VIDEO_FPS, RECORDING_ACT_DURATION} from './timeline/timing';
@@ -15,7 +16,7 @@ import {ramp} from './components/RecordingStage';
 
 const SummaryWithTransition: React.FC = () => {
   const frame = useCurrentFrame();
-  return <><Scene10CapabilitySummary />{frame < 24 && <div style={{position: 'absolute', inset: 0, opacity: 1-ramp(frame,0,24)}}><Freeze frame={FULL_TIMING.resultPreview-1}><Scene07ResultPreview /></Freeze></div>}</>;
+  return <><Scene10CapabilitySummary />{frame < 24 && <div style={{position: 'absolute', inset: 0, opacity: 1-ramp(frame,0,24)}}><Freeze frame={FULL_TIMING.exchangeFlow-1}><Scene08ExchangeFlow /></Freeze></div>}</>;
 };
 
 const FirstActPreview: React.FC = () => {
@@ -41,6 +42,7 @@ const RecordingActPreview: React.FC = () => <Series>
   <Series.Sequence durationInFrames={FULL_TIMING.protocolParse}><Scene05ProtocolParse /></Series.Sequence>
   <Series.Sequence durationInFrames={FULL_TIMING.aiMapping}><Scene06AiMapping /></Series.Sequence>
   <Series.Sequence durationInFrames={FULL_TIMING.resultPreview}><Scene07ResultPreview /></Series.Sequence>
+  <Series.Sequence durationInFrames={FULL_TIMING.exchangeFlow}><Scene08ExchangeFlow /></Series.Sequence>
 </Series>;
 
 const FullPromoVideo: React.FC = () => {
@@ -52,6 +54,7 @@ const FullPromoVideo: React.FC = () => {
       <Series.Sequence durationInFrames={FULL_TIMING.protocolParse}><Scene05ProtocolParse /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.aiMapping}><Scene06AiMapping /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.resultPreview}><Scene07ResultPreview /></Series.Sequence>
+      <Series.Sequence durationInFrames={FULL_TIMING.exchangeFlow}><Scene08ExchangeFlow /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.capabilitySummary}><SummaryWithTransition /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.ending}><Scene11EndingPlate /></Series.Sequence>
     </Series>
