@@ -1,4 +1,5 @@
 import React from 'react';
+import {ParsedOrderReveal} from '../components/ParsedOrderReveal';
 import {Freeze, Sequence, useCurrentFrame} from 'remotion';
 import {ramp, recordingStyle, RecordingStage, RecordingShotLayer} from '../components/RecordingStage';
 import type {RecordingShot} from '../components/RecordingStage';
@@ -6,22 +7,20 @@ import {Scene04ConnectorUpload} from './Scene04ConnectorUpload';
 import {FULL_TIMING} from '../timeline/timing';
 
 export const SCENE04_SHOTS: RecordingShot[] = [
-  {clip: 'parse', seconds: 5, sourceSize: [1740, 680], highlight: {x: 0.535, y: 0.08, width: 0.43, height: 0.82, from: 1.5}},
-  {clip: 'parse-detail', seconds: 5, layout: 'detail', sourceSize: [780, 510], heading: '报文里的订单，有了结构', lines: ['采购订单号', 'PO-123456']},
+  {clip: 'parse', seconds: 5, sourceSize: [1740, 680], highlight: {x: 874 / 1740, y: 14 / 680, width: 848 / 1740, height: 666 / 680, from: 1.5}},
 ];
 
 export const Scene05ProtocolParse: React.FC = () => {
   const frame = useCurrentFrame();
   return <>
-    <RecordingStage title="读懂报文，呈现业务结构" minimal step={1}>
+    <RecordingStage title="内置 EDIFACT、X12 等多种主流业务协议" minimal step={1}>
       <Sequence from={180} durationInFrames={315}>
         <RecordingShotLayer shot={SCENE04_SHOTS[0]} first />
       </Sequence>
       <Sequence from={480} durationInFrames={300}>
-        <RecordingShotLayer shot={SCENE04_SHOTS[1]} first={false} />
+        <ParsedOrderReveal shot={SCENE04_SHOTS[0]} />
       </Sequence>
       {frame < 195 && <div style={{position: 'absolute', inset: '210px 0 0', background: '#FBFBFD', opacity: 1 - ramp(frame, 180, 195)}}>
-        <div style={{position: 'absolute', left: 120, top: 65, fontSize: 30, color: recordingStyle.muted, opacity: ramp(frame, 20, 45)}}>内置业务协议与报文模板</div>
         <div style={{position: 'absolute', left: 120, right: 120, top: 150, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24}}>
           {[
             {name: 'EDIFACT', examples: 'ORDERS · DESADV · INVOIC'},
@@ -33,7 +32,6 @@ export const Scene05ProtocolParse: React.FC = () => {
             <div style={{marginTop: 18, fontSize: 25, color: recordingStyle.muted}}>{examples}</div>
           </div>)}
         </div>
-        <div style={{position: 'absolute', left: 120, top: 610, fontSize: 28, color: recordingStyle.muted, opacity: ramp(frame, 65, 90)}}>专有舱单模板：IFCSUM · CN1101 · PENSUM</div>
       </div>}
     </RecordingStage>
     {frame < 24 && <div style={{position: 'absolute', inset: 0, opacity: 1-ramp(frame,0,24), pointerEvents: 'none'}}>
