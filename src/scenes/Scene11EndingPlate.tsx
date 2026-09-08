@@ -1,7 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {LightBackground} from '../components/LightBackground';
-import {SubtitleBanner} from '../components/SubtitleBanner';
 import {PRODUCT_NAME} from '../content/demo';
 
 export const Scene11EndingPlate: React.FC = () => {
@@ -33,7 +32,7 @@ export const Scene11EndingPlate: React.FC = () => {
   });
 
   const cursorX = interpolate(cursorMove, [0, 1], [1260, 960]);
-  const cursorY = interpolate(cursorMove, [0, 1], [840, 665]);
+  const cursorY = interpolate(cursorMove, [0, 1], [840, 675]);
 
   // 鼠标透明度 (第 45 帧渐显)
   const cursorOpacity = interpolate(frame, [45, 60], [0, 1], {
@@ -100,7 +99,7 @@ export const Scene11EndingPlate: React.FC = () => {
       <div
         className="absolute left-1/2 top-[50%] z-20 flex flex-col items-center justify-center -translate-x-1/2 -translate-y-1/2 text-center"
         style={{
-          transform: `translate(-50%, -50%) scale(${plateScale})`,
+          transform: `translate(-50%, -50%) scale(${plateScale * 1.08})`,
           opacity: contentOpacity,
         }}
       >
@@ -192,13 +191,6 @@ export const Scene11EndingPlate: React.FC = () => {
           />
         </svg>
       </div>
-
-      {/* 固定 HUD 底部字幕 */}
-      <SubtitleBanner
-        text="连接异构世界，赋能企业互联。开启敏捷、安全、高效的新一代数据交换之旅！"
-        startFrame={15}
-        bottomPx={26}
-      />
     </AbsoluteFill>
   );
 };

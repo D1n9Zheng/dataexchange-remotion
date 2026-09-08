@@ -1,5 +1,5 @@
 import React from 'react';
-import {Composition, Series} from 'remotion';
+import {Composition, Freeze, Series, useCurrentFrame} from 'remotion';
 import {Scene01PainPoints} from './scenes/Scene01PainPoints';
 import {Scene02Breakthrough} from './scenes/Scene02Breakthrough';
 import {Scene03Protocols} from './scenes/Scene03Protocols';
@@ -7,12 +7,16 @@ import {Scene04ConnectorUpload} from './scenes/Scene04ConnectorUpload';
 import {Scene05ProtocolParse} from './scenes/Scene05ProtocolParse';
 import {Scene06AiMapping} from './scenes/Scene06AiMapping';
 import {Scene07ResultPreview} from './scenes/Scene07ResultPreview';
-import {Scene08ExchangeFlow} from './scenes/Scene08ExchangeFlow';
-import {Scene09Monitoring} from './scenes/Scene09Monitoring';
 import {Scene10CapabilitySummary} from './scenes/Scene10CapabilitySummary';
 import {Scene11EndingPlate} from './scenes/Scene11EndingPlate';
 import {FIRST_ACT_DURATION, FIRST_ACT_TIMING, FULL_DURATION, FULL_TIMING, VIDEO_FPS, RECORDING_ACT_DURATION} from './timeline/timing';
 import './styles/global.css';
+import {ramp} from './components/RecordingStage';
+
+const SummaryWithTransition: React.FC = () => {
+  const frame = useCurrentFrame();
+  return <><Scene10CapabilitySummary />{frame < 24 && <div style={{position: 'absolute', inset: 0, opacity: 1-ramp(frame,0,24)}}><Freeze frame={FULL_TIMING.resultPreview-1}><Scene07ResultPreview /></Freeze></div>}</>;
+};
 
 const FirstActPreview: React.FC = () => {
   return (
@@ -37,7 +41,6 @@ const RecordingActPreview: React.FC = () => <Series>
   <Series.Sequence durationInFrames={FULL_TIMING.protocolParse}><Scene05ProtocolParse /></Series.Sequence>
   <Series.Sequence durationInFrames={FULL_TIMING.aiMapping}><Scene06AiMapping /></Series.Sequence>
   <Series.Sequence durationInFrames={FULL_TIMING.resultPreview}><Scene07ResultPreview /></Series.Sequence>
-  <Series.Sequence durationInFrames={FULL_TIMING.exchangeFlow}><Scene08ExchangeFlow /></Series.Sequence>
 </Series>;
 
 const FullPromoVideo: React.FC = () => {
@@ -49,9 +52,7 @@ const FullPromoVideo: React.FC = () => {
       <Series.Sequence durationInFrames={FULL_TIMING.protocolParse}><Scene05ProtocolParse /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.aiMapping}><Scene06AiMapping /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.resultPreview}><Scene07ResultPreview /></Series.Sequence>
-      <Series.Sequence durationInFrames={FULL_TIMING.exchangeFlow}><Scene08ExchangeFlow /></Series.Sequence>
-      <Series.Sequence durationInFrames={FULL_TIMING.monitoring}><Scene09Monitoring /></Series.Sequence>
-      <Series.Sequence durationInFrames={FULL_TIMING.capabilitySummary}><Scene10CapabilitySummary /></Series.Sequence>
+      <Series.Sequence durationInFrames={FULL_TIMING.capabilitySummary}><SummaryWithTransition /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.ending}><Scene11EndingPlate /></Series.Sequence>
     </Series>
   );
@@ -60,7 +61,7 @@ const FullPromoVideo: React.FC = () => {
 export const Root: React.FC = () => {
   return (
     <>
-      {/* S03–S07 已接入真实录屏；S08 等待补录。全片 94 秒。 */}
+      {/* S06 转换结果直接衔接 S09/S10；S07/S08 不进入主片。全片 72 秒。 */}
       <Composition id="RecordingActPreview" component={RecordingActPreview} durationInFrames={RECORDING_ACT_DURATION} fps={VIDEO_FPS} width={1920} height={1080} />
       <Composition
         id="FullPromoVideo"
