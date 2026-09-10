@@ -47,7 +47,7 @@ const RecordingActPreview: React.FC = () => <Series>
 
 const FullPromoVideo: React.FC = () => {
   return (
-    <Series>
+    <Series from={-74}>
       <Series.Sequence durationInFrames={FULL_TIMING.painPoints}><Scene01PainPoints /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.dataJourney}><Scene02Breakthrough /></Series.Sequence>
       <Series.Sequence durationInFrames={FULL_TIMING.connectorAndUpload}><Scene04ConnectorUpload /></Series.Sequence>
